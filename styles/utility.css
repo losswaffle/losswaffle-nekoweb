@@ -1,0 +1,15 @@
+.color-primary {
+  color: var(--primary);
+}
+
+.color-secondary {
+  color: var(--secondary);
+}
+
+.color-tertiary {
+  color: var(--tertiary);
+}
+
+.color-red {
+  color: var(--red);
+}
