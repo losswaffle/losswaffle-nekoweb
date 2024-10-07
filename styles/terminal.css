@@ -1,11 +1,8 @@
-@import url(https://fonts.googleapis.com/css?family=VT323);
-
 /*#region TAGS*/
 html,
 body {
   background: var(--background);
   color: var(--primary);
-  font-size: 1.2em;
   font-family: var(--font);
   height: 100%;
   margin: 0;

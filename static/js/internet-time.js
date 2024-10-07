@@ -26,11 +26,7 @@ function setCurrentDate() {
   const currentDate = document.querySelector("#current-date");
   if (!!currentDate) {
     const date = new Date();
-    currentDate.innerText = new Intl.DateTimeFormat("en-US", {
-      day: "2-digit",
-      month: "2-digit",
-      year: "numeric",
-    }).format(date);
+    currentDate.innerText = date.toISOString().split("T")[0];
   }
 }
 

@@ -3,9 +3,15 @@ async function getStats() {
     "https://nekoweb.org/api/site/info/losswaffle"
   ).then((x) => x.json());
 
-  return {
-    updated: new Date(stats.updated_at).toISOString().split("T")[0],
-    created: new Date(stats.created_at).toISOString().split("T")[0],
-    views: stats.views,
-  };
+  const counter = document.querySelector("#view-counter");
+  const updated = document.querySelector("#last-updated");
+
+  if (counter && updated) {
+    counter.innerText = `views: ${stats.views}`;
+    updated.innerText = `last updated: ${
+      new Date(stats.updated_at).toISOString().split("T")[0]
+    }`;
+  }
 }
+
+getStats();

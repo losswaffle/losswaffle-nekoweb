@@ -1,18 +1,3 @@
-async function displayStats() {
-  const stats = await fetch(
-    "https://nekoweb.org/api/site/info/losswaffle"
-  ).then((x) => x.json());
-
-  const counter = document.querySelector("#view-counter");
-  const updated = document.querySelector("#last-updated");
-  counter.innerText = `views: ${stats.views}`;
-  updated.innerText = `last updated: ${
-    new Date(stats.updated_at).toISOString().split("T")[0]
-  }`;
-}
-
-displayStats();
-
 let commandHistory = ["neofetch"];
 
 const software = [
@@ -23,6 +8,7 @@ const software = [
   "Aseprite",
   "Blender",
   "Trenchbroom",
+  "React / RedwoodJS",
 ];
 
 const commands = [
@@ -35,29 +21,53 @@ const commands = [
   "blog",
   "projects",
   "interests",
-  "GUI",
+  "gui",
   "now",
   "guestbook",
 ];
 
-const htmlCommands = ["neofetch", "about", "socials", "contact"];
+const htmlCommands = [
+  "neofetch",
+  "about",
+  "socials",
+  "contact",
+  "interests",
+  "projects",
+];
 
-const socials = `<article><p><span class="highlight">Twitter</span>: <a href="https://x.com/losswaffles" target="_blank">@losswaffles</a>
-    <span class="highlight">Cohost</span>: <a href="https://cohost.org/losswaffle" target="_blank">@losswaffle</a>
-    <span class="highlight">Discord</span>: <a href="https://discord.com/channels/124008672786382848" target="_blank">losswaffle</a>
-    <span class="highlight">Email</span>: <a href="mailto:losswaffle@duck.com" target="_blank">losswaffle@duck.com</a></p></article>`;
+const socials = `<article><p><span class="highlight">losswaffle</span>@<span>nekoweb</span>: socials <br>-------------------
+<span class="highlight">Twitter</span>: <a href="https://x.com/losswaffles" target="_blank">@losswaffles</a>
+<span class="highlight">Discord</span>: <a href="https://discord.com/channels/124008672786382848" target="_blank">losswaffle</a>
+<span class="highlight">Email</span>: <a href="mailto:losswaffles@gmail.com" target="_blank">losswaffles@gmail.com</a>
+<span class="highlight">Cohost</span>: you will be missed, eggbug :c
+</p></article>`;
 
 const neofetch = `<article style="display: flex; gap: 1rem;">
-      <img style="align-self: center;" width="300" height="300" src="/static/img/me_terminal.jpg" />
-      <p><span class="highlight">losswaffle</span>@<span>nekoweb</span><br>------------------
-      <span class="highlight">Usernames</span>: LossWaffle, Waffle, Bits
-      <span class="highlight">Pronouns(🏳️‍⚧️)</span>: they/them
-      <span class="highlight">Country</span>: Brazil
-      <span class="highlight">Job</span>: Software Architect
-      <span class="highlight">Uptime</span>: 24 Years
-      <span class="highlight">Email</span>: <a href="mailto:losswaffle@duck.com">losswaffle@duck.com</a>
-      <span class="highlight">Politics</span>: Communist ☭
-      <span class="highlight">Sexuality</span>: Pansexual</p></article>`;
+<img style="align-self: center;" width="270" height="270" src="/static/img/me_terminal.jpg" />
+<p><span class="highlight">losswaffle</span>@<span>nekoweb</span><br>------------------
+<span class="highlight">Usernames</span>: LossWaffle, Waffle, Bits
+<span class="highlight">Pronouns(🏳️‍⚧️)</span>: they/them
+<span class="highlight">Country</span>: Brazil
+<span class="highlight">Job</span>: Software Architect / Tech Lead
+<span class="highlight">Uptime</span>: 24 Years (2000-02-22T22:13)
+<span class="highlight">Email</span>: <a href="mailto:losswaffles@gmail.com">losswaffles@gmail.com</a>
+<span class="highlight">Politics</span>: Communist ☭
+<span class="highlight">Sexuality</span>: Pansexual
+</p></article>`;
+
+const projects = `<article><p><span class="highlight">losswaffle</span>@<span>nekoweb</span>: projects <br>-------------------
+<a href="#" target="_blank">Froggy</a>: discord bot for administrators and anime fans.
+<a href="#" target="_blank">CaveScape</span>: losswaffles@gmail.com
+<a href="#" target="_blank">Torrato</span>: you will be missed, eggbug :(
+<a href="#" target="_blank">Torrato</span>: you will be missed, eggbug :(
+</p></article>`;
+
+const interests = `<article><p>
+<span class="highlight">Twitter</span>: <a href="https://x.com/losswaffles" target="_blank">@losswaffles</a>
+<span class="highlight">Discord</span>: <a href="https://discord.com/channels/124008672786382848" target="_blank">losswaffle</a>
+<span class="highlight">Email</span>: <a href="mailto:losswaffles@gmail.com" target="_blank">losswaffles@gmail.com</a>
+<span class="highlight">Cohost</span>: you will be missed, eggbug :(
+</p></article>`;
 
 const wait = (ms = 0) => new Promise((resolve) => setTimeout(resolve, ms));
 
@@ -166,10 +176,21 @@ function execute(command) {
         .focus();
       return "";
 
-    case "projects":
-    case "interests":
     case "gui":
+      window.open("https://losswaffle.nekoweb.org/home.html").focus();
+      return;
+
+    case "projects":
+      return projects;
+
+    case "interests":
+      return socials;
+
     case "now":
+      window.open("https://losswaffle.nekoweb.org/now.html").focus();
+      return "";
+
+    case "missing":
       return `missing implementation: '${command.toLowerCase()}'.`;
 
     default:
@@ -192,8 +213,9 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   await writeText(
     instructions,
-    `Enter a command. Enter 'help' to see a list of commands.`
+    `Enter a command. Enter 'help' to see a list of commands.\n\n`
   );
+
   prompt.prepend("$: >");
   cursor.innerHTML = "_";
 
